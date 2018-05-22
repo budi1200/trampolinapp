@@ -1,0 +1,111 @@
+{
+    "ekipe": [
+        {
+            "id": 1,
+            "ime": "Evegreen",
+            "kratek_opis": "loreakjhsdjahsgjdgasjgdajsgdjasgdjashdjashdasdfsdfklshdfjsdhfjkshdfksdhfkjhsdk",
+            "opis": "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+            "slika": "http://192.168.1.101/trampolin/green.jpg",
+            "dod_slike": [
+                {
+                    "id" : "1",
+                    "url": "http://192.168.1.101/trampolin/blue.png"
+                },
+                {
+                    "id" : "2",
+                    "url": "http://192.168.1.101/trampolin/green.jpg"
+                }
+            ],
+            "clani": [
+                {
+                    "ime": "Eve1",
+                    "priimek": "Foo1",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                },
+                {
+                    "ime": "Eve2",
+                    "priimek": "Foo2",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                }
+            ]
+        },
+
+        {
+            "id": 2,
+            "ime": "Eveblue",
+            "kratek_opis": "aishdjahsdjhajshdjashduzeuwzeqbnabndbs",
+            "opis": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "slika": "http://192.168.1.101/trampolin/blue.png",
+            "dod_slike": [
+                {
+                    "id": "1",
+                    "url": "http://192.168.1.101/trampolin/blue.png"
+                },
+                {
+                    "id": "2",
+                    "url": "http://192.168.1.101/trampolin/green.jpg"
+                }
+            ],
+            "clani": [
+                {
+                    "ime": "Eve3",
+                    "priimek": "Foo3",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                },
+                {
+                    "ime": "Eve4",
+                    "priimek": "Foo4",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                }
+            ]
+        },
+
+        {
+            "id": 3,
+            "ime": "Evered",
+            "kratek_opis": "ašppopopopoepqwopeqweoiqwoeiqowieowie",
+            "opis": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+            "slika": "http://192.168.1.101/trampolin/red.jpg",
+            "dod_slike": [
+                {
+                    "id": "1",
+                    "url": "http://192.168.1.101/trampolin/blue.png"
+                },
+                {
+                    "id": "2",
+                    "url": "http://192.168.1.101/trampolin/green.jpg"
+                }
+            ],
+            "clani": [
+                {
+                    "ime": "Eve5",
+                    "priimek": "Foo5",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                },
+                {
+                    "ime": "Eve6",
+                    "priimek": "Foo6",
+                    "slika": "http://192.168.1.101/trampolin/user.png",
+                    "telefon": "040114567",
+                    "email": "asd@gmail.com",
+                    "linkedin": "asdf"
+                }
+            ]
+        }
+    ]
+}
