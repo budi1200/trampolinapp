@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableNativeFeedback, Button, ActivityIndicator, ScrollView, WebView } from 'react-native';
-import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { Icon } from 'react-native-elements'
 import { COLOR, ThemeProvider, Toolbar, Card } from 'react-native-material-ui';
 import StatusBar from "./StatusBar";
 import ImageSlider from "react-native-image-slider";
+import SplashScreen from 'react-native-splash-screen';
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 const userpic = require('./blue.png');
 
@@ -21,7 +24,6 @@ const uiTheme = {
 };
 
 var db2;
-var db3 = 'https://app2.sli.do/event/sc1adicm/polls';
 
 /*----------------------------------------------------------------------------------------------------------------------HOME SCREEN */
 class HomeScreen extends React.Component {
@@ -76,6 +78,7 @@ class HomeScreen extends React.Component {
         <Text>Loading</Text>
       );
     } else {
+      SplashScreen.hide();
       db2 = this.state.dataSource;
     return(
       <ThemeProvider uiTheme={uiTheme}>
@@ -194,7 +197,7 @@ class VoteScreen extends React.Component {
           {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content" />*/}
           <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')} centerElement="Glasuj" />
           <WebView
-            source={{ uri: db3 }}
+            source={{ uri: db2.slido }}
             style={{ flex: 1 }}
             javaScriptEnabled={true}
             startInLoadingState={true}
@@ -379,7 +382,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const StackNav = StackNavigator({
+const StackNav = createStackNavigator({
   Home: {
     screen: HomeScreen,
   },
@@ -394,7 +397,7 @@ const StackNav = StackNavigator({
   initialRouteName: 'Home',
 })
 
-const RootStack = DrawerNavigator({
+const RootStack = createDrawerNavigator({
   Home: {
     screen: StackNav,
   },
