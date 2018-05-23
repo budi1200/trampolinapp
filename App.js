@@ -61,7 +61,7 @@ class HomeScreen extends React.Component {
         color: 'white'
       },
       headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.navigate('DrawerOpen')} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
             <View style={{padding: 5, margin: 15, marginLeft: 12}}>
               <Icon name="menu" size={24} color='white' />
             </View>
@@ -136,7 +136,7 @@ class AboutScreen extends React.Component {
         color: 'white'
       },
       headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.navigate('DrawerOpen')} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
           <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
             <Icon name="menu" size={24} color='white' />
           </View>
@@ -152,7 +152,7 @@ class AboutScreen extends React.Component {
       <ThemeProvider uiTheme={uiTheme}>
         <View>
           {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content"/>*/}
-          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')} centerElement="O Programu" />
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="O Programu" />
           <Card>
             <Text style={{padding:10}}>Naredil: Alen Budimir</Text>
           </Card>
@@ -179,7 +179,7 @@ class VoteScreen extends React.Component {
         color: 'white'
       },
       headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.navigate('DrawerOpen')} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
           <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
             <Icon name="menu" size={24} color='white' />
           </View>
@@ -195,7 +195,7 @@ class VoteScreen extends React.Component {
       <ThemeProvider uiTheme={uiTheme}>
         <View style={{ flex: 1 }}>
           {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content" />*/}
-          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')} centerElement="Glasuj" />
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="Glasuj" />
           <WebView
             source={{ uri: db2.slido }}
             style={{ flex: 1 }}
