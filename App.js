@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableNativeFeedback, Button, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableNativeFeedback, Button, ActivityIndicator, ScrollView, WebView } from 'react-native';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //import { Icon } from 'react-native-elements'
@@ -19,6 +19,9 @@ const uiTheme = {
     }
   }
 };
+
+var db2;
+var db3 = 'https://app2.sli.do/event/sc1adicm/polls';
 
 /*----------------------------------------------------------------------------------------------------------------------HOME SCREEN */
 class HomeScreen extends React.Component {
@@ -73,6 +76,7 @@ class HomeScreen extends React.Component {
         <Text>Loading</Text>
       );
     } else {
+      db2 = this.state.dataSource;
     return(
       <ThemeProvider uiTheme={uiTheme}>
         <View style={{ paddingTop: 0, backgroundColor: "white", height: "100%"}}>
@@ -113,16 +117,38 @@ class HomeScreen extends React.Component {
 
 /*------------------------------------------------------------------------------------------------------------ABOUT SCREEN */
 class AboutScreen extends React.Component {
-  static navigationOptions = {
+  /*static navigationOptions = {
     drawerLabel: 'O Programu',
     drawerIcon: ( () => (<Icon name="info" size={24} />))
+  }*/
+
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      title: 'O Programu',
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.navigate('DrawerOpen')} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
+            <Icon name="menu" size={24} color='white' />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      drawerLabel: 'O Programu',
+      drawerIcon: (() => (<Icon name="info" size={24} />))
+    }
   }
 
   render(){
     return(
       <ThemeProvider uiTheme={uiTheme}>
         <View>
-          <StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content"/>
+          {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content"/>*/}
           <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')} centerElement="O Programu" />
           <Card>
             <Text style={{padding:10}}>Naredil: Alen Budimir</Text>
@@ -133,6 +159,51 @@ class AboutScreen extends React.Component {
   }
 }
 
+class VoteScreen extends React.Component {
+  /*static navigationOptions = {
+    drawerLabel: 'Glasuj',
+    drawerIcon: (() => (<Icon name="info" size={24} />))
+  }*/
+
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      title: 'Glasuj',
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.navigate('DrawerOpen')} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
+            <Icon name="menu" size={24} color='white' />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      drawerLabel: 'Glasuj',
+      drawerIcon: (() => (<Icon name="person" size={24} />))
+    }
+  }
+
+  render() {
+    return (
+      <ThemeProvider uiTheme={uiTheme}>
+        <View style={{ flex: 1 }}>
+          {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content" />*/}
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.navigate('DrawerOpen')} centerElement="Glasuj" />
+          <WebView
+            source={{ uri: db3 }}
+            style={{ flex: 1 }}
+            javaScriptEnabled={true}
+            startInLoadingState={true}
+          />
+        </View>
+      </ThemeProvider>
+    );
+  }
+}
 
 /*------------------------------------------------------------------------------------------------------------TEAM SCREEN */
 class TeamInfoScreen extends React.Component {
@@ -208,7 +279,7 @@ class TeamInfoScreen extends React.Component {
                       )} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ padding: 16, height: 96, borderBottomColor: "#E0E0E0", borderBottomWidth: 1 }}>
                       <View style={{ flex: 1, flexDirection: "row" }}>
-                        <Image style={{ height: 64, width: 64, borderRadius: 50 }} source={{ uri: "http://192.168.1.101/trampolin/green.jpg" }} />
+                        <Image style={{ height: 64, width: 64, borderRadius: 50 }} source={{ uri: clan.slika}} />
                         <View style={{ paddingLeft: 16, justifyContent: "center" }}>
                           <Text
                             style={{
@@ -330,45 +401,16 @@ const RootStack = DrawerNavigator({
   About: {
     screen: AboutScreen,
   },
+  Vote: {
+    screen: VoteScreen,
+  }
 })
 
 export default class App extends React.Component {
 
-/*  constructor(props) {
-    super();
-    this.state = { isLoading: true, jsonResponse: '' }
-  }
-
-  componentDidMount() {
-    setInterval(() => this.GetApiData(), 10000);
-  }
-
-  async GetApiData() {
-    // prenesi podatke iz API-ja
-    return fetch("https://evidenca.scv.si/trampolin/data.json")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ isLoading: false });
-      })
-      .then(data => db2 = data)
-      .catch(error => {
-        console.error(error);
-      });
-  }
-*/
-
   render(){
-   /* if(this.state.isLoading){
-      return(
-      <View style={{ flex: 1, padding: 20 }}>
-        <ActivityIndicator />
-      </View>
-      );
-    } else {
-      console.log(db2)*/
       return (
         <RootStack />
       );
-   // }
   }
 }
