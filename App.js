@@ -1,16 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableNativeFeedback, Button, ActivityIndicator, ScrollView, WebView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableNativeFeedback, ActivityIndicator, ScrollView, WebView, Linking } from 'react-native';
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-//import { Icon } from 'react-native-elements'
-import { COLOR, ThemeProvider, Toolbar, Card } from 'react-native-material-ui';
-import StatusBar from "./StatusBar";
+import { COLOR, ThemeProvider, Toolbar, Card, Button } from 'react-native-material-ui';
 import ImageSlider from "react-native-image-slider";
 import SplashScreen from 'react-native-splash-screen';
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
-
-const userpic = require('./blue.png');
 
 const uiTheme = {
   palette: {
@@ -52,8 +48,8 @@ class HomeScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
 
-    return{
-      title: 'Ekipe',
+    return {
+      title: 'Teams',
       headerStyle: {
         backgroundColor: uiTheme.palette.primaryColor,
       },
@@ -67,7 +63,7 @@ class HomeScreen extends React.Component {
             </View>
         </TouchableNativeFeedback>
       ),
-      drawerLabel: 'Ekipe',
+      drawerLabel: 'Teams',
       drawerIcon: ( () => (<Icon name="person" size={24} />))
     }
   }
@@ -82,7 +78,7 @@ class HomeScreen extends React.Component {
       db2 = this.state.dataSource;
     return(
       <ThemeProvider uiTheme={uiTheme}>
-        <View style={{ paddingTop: 0, backgroundColor: "white", height: "100%"}}>
+        <ScrollView style={{ paddingTop: 0, backgroundColor: "white", height: "100%"}}>
             {
               this.state.dataSource.ekipe.map((teamInfo => (
               <View key={teamInfo.id}>
@@ -92,6 +88,7 @@ class HomeScreen extends React.Component {
                                                                               ime: teamInfo.ime,
                                                                               opis: teamInfo.opis,
                                                                               slika: teamInfo.slika,
+                                                                              www: teamInfo.www,
                                                                               dod_slike: teamInfo.dod_slike,
                                                                               clani: teamInfo.clani
                   })}
@@ -101,8 +98,8 @@ class HomeScreen extends React.Component {
                     <View style={{flex: 1, flexDirection: "row" }}>
                       <Image style={{ height: 64, width: 64, borderRadius: 50, resizeMode: 'contain'}} source={{ uri: teamInfo.slika }}/>
                       <View style={{ paddingLeft: 16, justifyContent: "center"}}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", opacity: 0.7 }}>{teamInfo.ime}</Text>
-                        <Text style={{ fontSize: 14, opacity: 0.5, maxWidth: "90%", minWidth: "90%" }}>{teamInfo.kratek_opis}</Text>
+                        <Text style={[styles.titleText, { fontSize: 18}]}>{teamInfo.ime}</Text>
+                        <Text style={[styles.descText, { fontSize: 14, maxWidth: "90%", minWidth: "90%" }]}>{teamInfo.kratek_opis}</Text>
                       </View>
                     </View>
 
@@ -110,112 +107,22 @@ class HomeScreen extends React.Component {
                 </TouchableNativeFeedback>
               </View>
             )))}
-        </View>
+        </ScrollView>
       </ThemeProvider>
     )
   }
   }
 }
 
-
-/*------------------------------------------------------------------------------------------------------------ABOUT SCREEN */
-class AboutScreen extends React.Component {
-  /*static navigationOptions = {
-    drawerLabel: 'O Programu',
-    drawerIcon: ( () => (<Icon name="info" size={24} />))
-  }*/
-
-  static navigationOptions = ({ navigation }) => {
-
-    return {
-      title: 'O Programu',
-      headerStyle: {
-        backgroundColor: uiTheme.palette.primaryColor,
-      },
-      headerTitleStyle: {
-        color: 'white'
-      },
-      headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
-          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
-            <Icon name="menu" size={24} color='white' />
-          </View>
-        </TouchableNativeFeedback>
-      ),
-      drawerLabel: 'O Programu',
-      drawerIcon: (() => (<Icon name="info" size={24} />))
-    }
-  }
-
-  render(){
-    return(
-      <ThemeProvider uiTheme={uiTheme}>
-        <View>
-          {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content"/>*/}
-          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="O Programu" />
-          <Card>
-            <Text style={{padding:10}}>Naredil: Alen Budimir</Text>
-          </Card>
-        </View>
-      </ThemeProvider>
-    );
-  }
-}
-
-class VoteScreen extends React.Component {
-  /*static navigationOptions = {
-    drawerLabel: 'Glasuj',
-    drawerIcon: (() => (<Icon name="info" size={24} />))
-  }*/
-
-  static navigationOptions = ({ navigation }) => {
-
-    return {
-      title: 'Glasuj',
-      headerStyle: {
-        backgroundColor: uiTheme.palette.primaryColor,
-      },
-      headerTitleStyle: {
-        color: 'white'
-      },
-      headerLeft: (
-        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
-          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
-            <Icon name="menu" size={24} color='white' />
-          </View>
-        </TouchableNativeFeedback>
-      ),
-      drawerLabel: 'Glasuj',
-      drawerIcon: (() => (<Icon name="person" size={24} />))
-    }
-  }
-
-  render() {
-    return (
-      <ThemeProvider uiTheme={uiTheme}>
-        <View style={{ flex: 1 }}>
-          {/*<StatusBar backgroundColor={uiTheme.palette.primaryColor} barStyle="light-content" />*/}
-          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="Glasuj" />
-          <WebView
-            source={{ uri: db2.slido }}
-            style={{ flex: 1 }}
-            javaScriptEnabled={true}
-            startInLoadingState={true}
-          />
-        </View>
-      </ThemeProvider>
-    );
-  }
-}
-
 /*------------------------------------------------------------------------------------------------------------TEAM SCREEN */
+
 class TeamInfoScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     const { params } = navigation.state;
 
     return{
-      title: params ? 'Ekipa ' + params.ime : 'Ekipa',
+      title: params ? 'Team ' + params.ime : 'Team',
       headerStyle: {
         backgroundColor: uiTheme.palette.primaryColor,
       },
@@ -241,71 +148,75 @@ class TeamInfoScreen extends React.Component {
     const slika = params ? params.slika : null;
     const dod_slike = params ? params.dod_slike : null;
     const clani = params ? params.clani : null;
+    const www = params ? params.www : null;
     
+    var slideshow = [];
+    for (var i = 0; i < dod_slike.length; i++) {
+      slideshow[i] = dod_slike[i].url;
+    }
     return (
-    <ScrollView>
       <ThemeProvider uiTheme={uiTheme}>
-          <View style={{ padding: 16, backgroundColor: "white", height: "100%" }}>
+          <ScrollView style={{ padding: 16, backgroundColor: "white", height: "100%" }}>
             <View style={{ flex: 1, flexDirection: "row", maxHeight: 128, alignItems: "center" }}>
               <Image style={{ marginRight: 8, height: 128, width: 128, borderRadius: 100, resizeMode: 'contain' }} source={{ uri: slika }} />
-              <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+              <Text style={[styles.titleText, { paddingLeft: 6, fontSize: 24}]}>
                 {JSON.parse(JSON.stringify(ime))}
               </Text>
             </View>
 
+            <View>
+              <Button primary text="Website" icon="language" onPress={() => Linking.openURL(www)}/>
+            </View>
+
+            <View style={{ flex: 1, height: 400, borderTopColor: "#E0E0E0", borderTopWidth: 1, paddingTop: 16}}>
+              <ImageSlider images={slideshow} />
+            </View>
+
             {/* Opis */}
             <View style={{ paddingTop: 10, paddingBottom: 16, borderBottomColor: "#E0E0E0", borderBottomWidth: 1 }}>
-              <Text style={{ opacity: 0.5 }}>
+              <Text style={[styles.descText, { fontSize: 16 }]}>
                 {JSON.parse(JSON.stringify(opis))}
               </Text>
             </View>
 
-            <View style={{flex: 1}}>
-              <ImageSlider style={{width: "100%"}} images={[
-                'https://placeimg.com/640/640/nature',
-                'https://placeimg.com/640/640/people',
-                'https://placeimg.com/640/640/animals'
-              ]}/>
-            </View>
+
 
             {/* Člani */}
-            <View style={{ paddingTop: 16}}>
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Člani</Text>
-              {clani.map(clan => <View key={clan.ime}>
+            <View style={{ paddingTop: 16, paddingBottom: 24}}>
+              <Text style={[styles.titleText, { fontSize: 20}]}>Team Members</Text>
+              {clani.map((clan, index) =>
+                <View key={index}>
                   <TouchableNativeFeedback onPress={() => this.props.navigation.navigate(
                         "UserInfo",
                         {
                           ime: clan.ime,
                           priimek: clan.priimek,
-                          slika: clan.slika
+                          slika: clan.slika,
+                          email: clan.email,
+                          phone: clan.phone,
+                          linkedin: clan.linkedin,
+                          opis: clan.opis
                         }
                       )} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ padding: 16, height: 96, borderBottomColor: "#E0E0E0", borderBottomWidth: 1 }}>
                       <View style={{ flex: 1, flexDirection: "row" }}>
                         <Image style={{ height: 64, width: 64, borderRadius: 50 }} source={{ uri: clan.slika}} />
                         <View style={{ paddingLeft: 16, justifyContent: "center" }}>
-                          <Text
-                            style={{
-                              fontSize: 18,
-                              fontWeight: "bold",
-                              opacity: 0.7
-                            }}
-                          >
+                          <Text style={{ fontSize: 18, fontWeight: "bold", opacity: 0.8 }}>
                             {clan.ime}
                           </Text>
                         </View>
                       </View>
                     </View>
                   </TouchableNativeFeedback>
-                </View>)}
+                </View>
+              )}
             </View>
-          </View>
+          </ScrollView>
         </ThemeProvider>
-      </ScrollView>
     );
   }
 }
-
 
 /*------------------------------------------------------------------------------------------------------------USER SCREEN */
 class UserInfoScreen extends React.Component {
@@ -314,7 +225,7 @@ class UserInfoScreen extends React.Component {
     const { params } = navigation.state;
 
     return{
-      title: params ? params.ime : 'Član',
+      title: params ? params.ime : 'Member',
       headerStyle: {
         backgroundColor: uiTheme.palette.primaryColor,
       },
@@ -337,48 +248,174 @@ class UserInfoScreen extends React.Component {
     const ime = params ? params.ime : null;
     const priimek = params ? params.priimek : null;
     const slika = params ? params.slika : null;
+    const email = params ? params.email : null;
+    const phone = params ? params.phone : null;
+    const linkedin = params ? params.linkedin : null;
+    const opis = params ? params.opis : null;
     
     return(
       <ThemeProvider uiTheme={uiTheme}>
-        <View>
-          <Card>
-            <View style={[styles.cardInner, styles.height2]}>
+        <View style={{ backgroundColor: "white" }}>
+            <View style={[styles.height2, {padding: 16}]}>
               <View style={{ flex: 1, flexDirection: "row", maxHeight: 128, alignItems: 'center'}}>
-                <Image style={{marginRight: 8, height: 128, width: 128, borderRadius: 50 }} source={{uri: slika}} />
-                  <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+                <Image style={{marginRight: 8, height: 128, width: 128, borderRadius: 100 }} source={{uri: slika}} />
+                  <Text style={[styles.titleText, { fontSize: 24 }]}>
                     {JSON.parse(JSON.stringify(ime)) + ' ' + JSON.parse(JSON.stringify(priimek)) }
                   </Text>
               </View>
 
-              <View style={{paddingTop: 10}}>
-                  <Text style={{ opacity: 0.5 }}>
-                    {JSON.parse(JSON.stringify(priimek))}
-                  </Text>
+              <View style={{ paddingTop: 16, paddingBottom: 16, borderBottomColor: "#E0E0E0", borderBottomWidth: 1 }}>
+                <Text style={[styles.descText, {fontSize: 16}]}>
+                  {JSON.parse(JSON.stringify(opis))}
+                </Text>
+              </View>
+
+              <View style={{ paddingTop: 16, paddingBottom: 16, borderBottomColor: "#E0E0E0", borderBottomWidth: 1, alignItems: "flex-start" }}>
+                <Button primary text="Email" icon="mail" onPress={() => Linking.openURL("mailto:" + email)} />
+                <Button primary text={JSON.parse(JSON.stringify(phone))} icon="phone" onPress={() => Linking.openURL("tel:" + phone)} />
+                <Button primary text="Linkedin" icon="info" onPress={() => Linking.openURL(linkedin)} />
               </View>
             </View>
-          </Card>
         </View>
       </ThemeProvider>
     );
   }
 }
 
+/*------------------------------------------------------------------------------------------------------------VOTE SCREEN */
+class VoteScreen extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      title: 'Vote',
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
+            <Icon name="menu" size={24} color='white' />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      drawerLabel: 'Vote',
+      drawerIcon: (() => (<Icon name="poll" size={24} />))
+    }
+  }
+
+  render() {
+    return (
+      <ThemeProvider uiTheme={uiTheme}>
+        <View style={{ flex: 1 }}>
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="Vote" />
+          <WebView
+            source={{ uri: db2.slido }}
+            style={{ flex: 1 }}
+            javaScriptEnabled={true}
+            startInLoadingState={true}
+          />
+        </View>
+      </ThemeProvider>
+    );
+  }
+}
+
+/*------------------------------------------------------------------------------------------------------------ABOUT SCREEN */
+class AboutScreen extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      title: 'About',
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
+            <Icon name="menu" size={24} color='white' />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      drawerLabel: 'About',
+      drawerIcon: (() => (<Icon name="info" size={24} />))
+    }
+  }
+
+  render(){
+    return(
+      <ThemeProvider uiTheme={uiTheme}>
+        <View>
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="About" />
+          <Text>{db2.oprogramu}</Text>
+        </View>
+      </ThemeProvider>
+    );
+  }
+}
+
+/*------------------------------------------------------------------------------------------------------------Dev SCREEN */
+class AppInfoScreen extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+
+    return {
+      title: 'Application Info',
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+      },
+      headerTitleStyle: {
+        color: 'white'
+      },
+      headerLeft: (
+        <TouchableNativeFeedback onPress={() => navigation.openDrawer()} background={TouchableNativeFeedback.Ripple('#ffffff', true)}>
+          <View style={{ padding: 5, margin: 15, marginLeft: 12 }}>
+            <Icon name="menu" size={24} color='white' />
+          </View>
+        </TouchableNativeFeedback>
+      ),
+      drawerLabel: 'Application Info',
+      drawerIcon: (() => (<Icon name="settings" size={24} />))
+    }
+  }
+
+  render() {
+    return (
+      <ThemeProvider uiTheme={uiTheme}>
+        <View style={{ flex: 1, alignItems: "flex-start" }}>
+          <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="Application Info" />
+          <View style={{ padding: 16 }}>
+            <Text style={[styles.titleText, { fontSize: 18 }]}>Developer: Alen Budimir</Text>
+            <Button primary text="Email" icon="mail" onPress={() => Linking.openURL("mailto:alenab22@gmail.com")}/>
+            <Button primary text="Github" icon="cloud" onPress={() => Linking.openURL("https://github.com/budi1200/trampolinapp")} />
+          </View>
+        </View>
+      </ThemeProvider>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-
-  cardInner: {
-    padding: 10
-  },
-
   height: {
     height: 300
   },
   height2: {
     height: '100%'
+  },
+  titleText: {
+    color: "black",
+    opacity: 0.6,
+    fontWeight: "bold"
+  },
+  descText: {
+    opacity: 0.9,
   }
 })
 
@@ -392,22 +429,33 @@ const StackNav = createStackNavigator({
   UserInfo: {
     screen: UserInfoScreen,
   },
-}, 
-{
-  initialRouteName: 'Home',
 })
 
-const RootStack = createDrawerNavigator({
-  Home: {
-    screen: StackNav,
+const RootStack = createDrawerNavigator(
+  {
+    Home: {
+      screen: StackNav,
+      navigationOptions: props => ({
+        title: "Teams",
+        drawerIcon: () => <Icon name="person" size={24} />
+      })
+    },
+    Vote: {
+      screen: VoteScreen
+    },
+    About: {
+      screen: AboutScreen
+    },
+    AppInfo: {
+      screen: AppInfoScreen
+    }
   },
-  About: {
-    screen: AboutScreen,
-  },
-  Vote: {
-    screen: VoteScreen,
+  {
+    contentOptions: {
+      activeTintColor: "#2b55c6"
+    }
   }
-})
+);
 
 export default class App extends React.Component {
 
