@@ -74,7 +74,8 @@ class HomeScreen extends React.Component {
         <Text>Loading</Text>
       );
     } else {
-      SplashScreen.hide();
+      setTimeout(function () { SplashScreen.hide(); }, 2000);
+      
       db2 = this.state.dataSource;
     return(
       <ThemeProvider uiTheme={uiTheme}>
@@ -94,8 +95,8 @@ class HomeScreen extends React.Component {
                   })}
                   background={TouchableNativeFeedback.SelectableBackground()}
                 >
-                  <View style={{ padding: 16, height: 96, borderBottomColor: "#E0E0E0", borderBottomWidth: 1}}>
-                    <View style={{flex: 1, flexDirection: "row" }}>
+                  <View style={{ padding: 16, borderBottomColor: "#E0E0E0", borderBottomWidth: 1}}>
+                    <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
                       <Image style={{ height: 64, width: 64, borderRadius: 50, resizeMode: 'contain'}} source={{ uri: teamInfo.slika }}/>
                       <View style={{ paddingLeft: 16, justifyContent: "center"}}>
                         <Text style={[styles.titleText, { fontSize: 18}]}>{teamInfo.ime}</Text>
@@ -354,7 +355,12 @@ class AboutScreen extends React.Component {
       <ThemeProvider uiTheme={uiTheme}>
         <View>
           <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="About" />
-          <Text>{db2.oprogramu}</Text>
+          <View style={{ padding: 16 }}>
+            <View style={{ margin: "auto" }}>
+              <Image style={{ height: 128, resizeMode: 'contain' }} source={{ uri: db2.oprogramuslika }} />
+            </View>
+            <Text style={{paddingTop: 16}}>{db2.oprogramu}</Text>
+          </View>
         </View>
       </ThemeProvider>
     );
