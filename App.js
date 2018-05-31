@@ -150,11 +150,6 @@ class TeamInfoScreen extends React.Component {
     const dod_slike = params ? params.dod_slike : null;
     const clani = params ? params.clani : null;
     const www = params ? params.www : null;
-    
-    /*var slideshow = [];
-    for (var i = 0; i < dod_slike.length; i++) {
-      slideshow[i] = dod_slike[i].url;
-    }*/
 
     var slideshow = [];
     for (var i = 0; i < dod_slike.length; i++) {
@@ -176,10 +171,9 @@ class TeamInfoScreen extends React.Component {
             </View>
 
             <View style={{ flex: 1, borderTopColor: "#E0E0E0", borderTopWidth: 1, paddingTop: 16}}>
-              {/*<ImageSlider images={slideshow} />*/}
               <Slideshow
                 height={400}
-                arrowSize={18}
+                arrowSize={28}
                 scrollEnabled={false}
                 dataSource={slideshow} />
             </View>
