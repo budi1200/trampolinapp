@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableNativeFeedback, ActivityIndicat
 import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { COLOR, ThemeProvider, Toolbar, Card, Button } from 'react-native-material-ui';
-import ImageSlider from "react-native-image-slider";
+import Slideshow from 'react-native-slideshow';
 import SplashScreen from 'react-native-splash-screen';
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
@@ -151,10 +151,16 @@ class TeamInfoScreen extends React.Component {
     const clani = params ? params.clani : null;
     const www = params ? params.www : null;
     
-    var slideshow = [];
+    /*var slideshow = [];
     for (var i = 0; i < dod_slike.length; i++) {
       slideshow[i] = dod_slike[i].url;
+    }*/
+
+    var slideshow = [];
+    for (var i = 0; i < dod_slike.length; i++) {
+      slideshow.push({"url": dod_slike[i].url});
     }
+
     return (
       <ThemeProvider uiTheme={uiTheme}>
           <ScrollView style={{ padding: 16, backgroundColor: "white", height: "100%" }}>
@@ -169,8 +175,13 @@ class TeamInfoScreen extends React.Component {
               <Button primary text="Website" icon="language" onPress={() => Linking.openURL(www)}/>
             </View>
 
-            <View style={{ flex: 1, height: 400, borderTopColor: "#E0E0E0", borderTopWidth: 1, paddingTop: 16}}>
-              <ImageSlider images={slideshow} />
+            <View style={{ flex: 1, borderTopColor: "#E0E0E0", borderTopWidth: 1, paddingTop: 16}}>
+              {/*<ImageSlider images={slideshow} />*/}
+              <Slideshow
+                height={400}
+                arrowSize={18}
+                scrollEnabled={false}
+                dataSource={slideshow} />
             </View>
 
             {/* Opis */}
