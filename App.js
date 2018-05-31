@@ -191,8 +191,6 @@ class TeamInfoScreen extends React.Component {
               </Text>
             </View>
 
-
-
             {/* Člani */}
             <View style={{ paddingTop: 16, paddingBottom: 24}}>
               <Text style={[styles.titleText, { fontSize: 20}]}>Team Members</Text>
@@ -367,8 +365,8 @@ class AboutScreen extends React.Component {
         <View>
           <Toolbar leftElement="menu" onLeftElementPress={() => this.props.navigation.openDrawer()} centerElement="About" />
           <View style={{ padding: 16 }}>
-            <View style={{ margin: "auto" }}>
-              <Image style={{ height: 128, resizeMode: 'contain' }} source={{ uri: db2.oprogramuslika }} />
+            <View>
+              <Image style={{ height: 250 }} source={{ uri: db2.oprogramuslika }} />
             </View>
             <Text style={{paddingTop: 16}}>{db2.oprogramu}</Text>
           </View>
